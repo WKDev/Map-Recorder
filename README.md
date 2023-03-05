@@ -4,7 +4,7 @@
 
 ## Features
  - Automatic Backup
- - Topic Validity Check : if the target topic is not subscribes anything from the beginning, it alerts.
+ - Topic Validity Check : if the target topic publishs nothing from the beginning, it alerts.
 
 ## Requirements
  - tested on Ubuntu 20.04 / ROS Noetic

@@ -1,6 +1,6 @@
 # Map Recorder
  - subscribes topic from gps odometry, saves it to txt file.
- - improved version of txt_saver_for_kcity
+ - descendant / improved version of txt_saver_for_kcity
 
 ## Features
  - Automatic Backup

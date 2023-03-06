@@ -41,11 +41,17 @@ class MapRecorder:
         file_list = [f for f in os.listdir(TARGET_SAVE_PATH) if os.path.isfile(os.path.join(TARGET_SAVE_PATH, f))]
 
         if len(file_list)!=0:
-            rospy.logwarn('since there are files in save path, executing backup')
-            os.mkdir(os.path.join(TARGET_SAVE_PATH,self.get_current_time()))
 
+            #in order to determine the title of backup folder to first item of existing files.
+            abs_path = os.path.join(TARGET_SAVE_PATH,file_list[0])
+            new_folder_path = os.path.join(TARGET_SAVE_PATH,self.get_file_time(abs_path))
+            rospy.logwarn(f'since there are files in save path, executing backup created to : {new_folder_path}')
+            if not os.path.exists(new_folder_path):
+                os.mkdir(new_folder_path)
+
+            # breakpoint()
             for f in file_list:
-                shutil.move(os.path.join(TARGET_SAVE_PATH, f), os.path.join(TARGET_SAVE_PATH,self.get_current_time(),f))
+                shutil.move(os.path.join(TARGET_SAVE_PATH, f), os.path.join(new_folder_path,f))
 
         
         rospy.loginfo("#### #### MAP SAVER #### ####\n")
@@ -58,9 +64,13 @@ class MapRecorder:
         input_thread.daemon = True
         input_thread.start()
         
-    def get_current_time(self):
+    def get_file_time(self, filepath):
+
+        tm = os.path.getmtime(filepath)
+        dt = datetime.fromtimestamp(tm)
+
         now = datetime.now()
-        return now.strftime("bak_%y%m%d_%H%M%S")
+        return dt.strftime("bak_%y%m%d_%H%M%S")
 
     def get_input(self, exit_event,idx):
         # Set stdin to non-blocking mode

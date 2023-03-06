@@ -88,6 +88,8 @@ class MapRecorder:
 
                 elif user_input == 's' or user_input == 'S':
                     # os._exit()
+                    if len(self.total_saved) == 0:
+                        self.total_saved.append(self.utm)
 
                     exit_event.set()
                     break
